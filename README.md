@@ -1,2 +1,2 @@
 # CallerID
-An app to discretly display a caller id
+An app to discretly display the caller id
