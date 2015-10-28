@@ -2,11 +2,7 @@ package com.github.s7uxn37.callerid;
 
 import java.util.Date;
 
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
-import android.content.Intent;
 
 public class CallReceiver extends PhonecallReceiver {
 	public static boolean isEnabled = false;

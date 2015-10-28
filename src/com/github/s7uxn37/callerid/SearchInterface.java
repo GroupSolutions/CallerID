@@ -1,9 +1,22 @@
 package com.github.s7uxn37.callerid;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+
 public class SearchInterface {
-	public static void getName(String number, final Context context) {
+	public static void lookup(final String number, final Context context) {
 		// Instantiate the RequestQueue.
-		RequestQueue queue = Volley.newRequestQueue(this);
+		RequestQueue queue = Volley.newRequestQueue(context);
 		String url ="http://tel.search.ch/api/?was=" + number.replaceAll(" ", "");
 
 		// Request a string response from the provided URL.
@@ -11,12 +24,12 @@ public class SearchInterface {
 		            new Response.Listener<String>() {
 		    @Override
 		    public void onResponse(String anwser) {
-		    	String response = anwser.clone();
+		    	String response = anwser;
 		    	response = response.replaceAll("\n", "").replaceAll("\r", "");
 				response = afterSubstring(response, "<entry>");
 				response = afterSubstring(response, "<title type=\"text\">");
 				
-				int closeIndex = response.firstIndexOf("</title>");
+				int closeIndex = response.indexOf("</title>");
 				String name = response.substring(0, closeIndex);
 				
 				PendingIntent contentIntent = PendingIntent.getActivity(context, 0, new Intent(context,  InfoScreen.class), PendingIntent.FLAG_CANCEL_CURRENT);
@@ -44,8 +57,8 @@ public class SearchInterface {
 	
 	public static String afterSubstring(String str, String substr) {
 		int index;
-		if( (index = str.firstIndexOf(substr)) != -1){
-			str = str.substring(index + substr.length);
+		if( (index = str.indexOf(substr)) != -1){
+			return str.substring(index + substr.length());
 		} else {
 			return null;
 		}
