@@ -2,7 +2,12 @@
 <resources>
 
     <string name="app_name">CallerID</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+    <string name="license">CallerID by Marc Himmelberger is licensed under a CC-BY-NC-SA 3.0 Unported License.\nClick below to see the full license.</string>
+    <string name="switch_text">Toggle service</string>
+    <string name="switch_on">RUNNING</string>
+    <string name="switch_off">STOPPED</string>
+    <string name="license_button_text">See full license</string>
+    <string name="info">This app currently supports the following countries:\n- Switzerland</string>
+    <string name="license_link">http://raw.githubusercontent.com/S7uXN37/CallerID/master/LICENSE</string>
 
 </resources>

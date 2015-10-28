@@ -6,11 +6,43 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.github.s7uxn37.callerid.InfoScreen$PlaceholderFragment" >
+    tools:context="com.github.s7uxn37.callerid.InfoFragment" >
 
-    <TextView
+    <Button
+        android:id="@+id/SeeLicense"
+        style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="@string/license_button_text" />
+
+    <TextView
+        android:id="@+id/License"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/SeeLicense"
+        android:layout_centerHorizontal="true"
+        android:text="@string/license" />
+
+    <TextView
+        android:id="@+id/Info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:text="@string/info" />
+
+    <ToggleButton
+        android:id="@+id/Switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:checked="false"
+        android:text="@string/switch_text"
+        android:textOff="@string/switch_off"
+        android:textOn="@string/switch_on" />
 
 </RelativeLayout>
