@@ -12,18 +12,23 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 public class SearchInterface {
+	private static final String TAG = "CallerID:SearchInterface";
+	
 	public static void lookup(final String number, final Context context) {
 		// Instantiate the RequestQueue.
 		RequestQueue queue = Volley.newRequestQueue(context);
 		String url ="http://tel.search.ch/api/?was=" + number.replaceAll(" ", "");
-
+		
 		// Request a string response from the provided URL.
 		StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
 		            new Response.Listener<String>() {
 		    @Override
 		    public void onResponse(String anwser) {
+		    	Log.d(TAG, "Received response: " + anwser); // TODO remove
+		    	
 		    	String response = anwser;
 		    	response = response.replaceAll("\n", "").replaceAll("\r", "");
 				response = afterSubstring(response, "<entry>");
@@ -31,6 +36,8 @@ public class SearchInterface {
 				
 				int closeIndex = response.indexOf("</title>");
 				String name = response.substring(0, closeIndex);
+				
+				Log.i(TAG, "Resolved [" + number + "] to [" + name + "]");
 				
 				PendingIntent contentIntent = PendingIntent.getActivity(context, 0, new Intent(context,  InfoScreen.class), PendingIntent.FLAG_CANCEL_CURRENT);
 				
@@ -51,6 +58,9 @@ public class SearchInterface {
 		    	
 		    }
 		});
+		
+		Log.d(TAG, "Sending request to: " + url);
+		
 		// Add the request to the RequestQueue.
 		queue.add(stringRequest);
 	}

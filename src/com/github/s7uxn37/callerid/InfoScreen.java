@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -19,7 +20,8 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ToggleButton;
 
 public class InfoScreen extends Activity {
-
+	private static final String TAG = "CallerID:InfoScreen";
+	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,11 +56,15 @@ public class InfoScreen extends Activity {
 						.setOngoing(true)
 						.build();
 					((NotificationManager)getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE)).notify(1, noti);
+					 Log.d(TAG, "Enabled receiver");
 				} else {
 					((NotificationManager)getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE)).cancelAll();
+					 Log.d(TAG, "Disabled receiver");
 				}
 			}
 		});
+        
+        Log.d(TAG, "Activity created");
     }
 
 
