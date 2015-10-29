@@ -24,47 +24,52 @@ public class InfoScreen extends Activity {
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_info_screen);
-        if (savedInstanceState == null) {
-            getFragmentManager().beginTransaction()
-                    .add(R.id.container, new InfoFragment())
-                    .commit();
-        }
-        
-        final Intent seeLicenseIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.license_link)));
-        ((Button)findViewById(R.id.SeeLicense)).setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				startActivity(seeLicenseIntent);
-			}
-		});
-        
-        ((ToggleButton)findViewById(R.id.Switch)).setOnCheckedChangeListener(new OnCheckedChangeListener() {
-			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				CallReceiver.isEnabled = isChecked;
-				if(isChecked) {
-					PendingIntent contentIntent = PendingIntent.getActivity(getApplicationContext(), 0, new Intent(getApplicationContext(),  InfoScreen.class), PendingIntent.FLAG_CANCEL_CURRENT);
-					
-					Notification noti = new Notification.Builder(getApplicationContext())
-						.setSmallIcon(R.drawable.ic_launcher)
-						.setContentTitle("CallerID")
-						.setContentText("Waiting for call...")
-						.setContentIntent(contentIntent)
-						.setAutoCancel(false)
-						.setOngoing(true)
-						.build();
-					((NotificationManager)getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE)).notify(1, noti);
-					 Log.d(TAG, "Enabled receiver");
-				} else {
-					((NotificationManager)getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE)).cancelAll();
-					 Log.d(TAG, "Disabled receiver");
+    	try {
+	        super.onCreate(savedInstanceState);
+	        setContentView(R.layout.activity_info_screen);
+	        if (savedInstanceState == null) {
+	            getFragmentManager().beginTransaction()
+	                    .add(R.id.container, new InfoFragment())
+	                    .commit();
+	        }
+	        
+	        final Intent seeLicenseIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.license_link)));
+	        ((Button)findViewById(R.id.SeeLicense)).setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					startActivity(seeLicenseIntent);
 				}
-			}
-		});
-        
-        Log.d(TAG, "Activity created");
+			});
+	        
+	        ((ToggleButton)findViewById(R.id.Switch)).setOnCheckedChangeListener(new OnCheckedChangeListener() {
+				@Override
+				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+					CallReceiver.isEnabled = isChecked;
+					if(isChecked) {
+						PendingIntent contentIntent = PendingIntent.getActivity(getApplicationContext(), 0, new Intent(getApplicationContext(),  InfoScreen.class), PendingIntent.FLAG_CANCEL_CURRENT);
+						
+						Notification noti = new Notification.Builder(getApplicationContext())
+							.setSmallIcon(R.drawable.ic_launcher)
+							.setContentTitle("CallerID")
+							.setContentText("Waiting for call...")
+							.setContentIntent(contentIntent)
+							.setAutoCancel(false)
+							.setOngoing(true)
+							.build();
+						((NotificationManager)getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE)).notify(1, noti);
+						 Log.d(TAG, "Enabled receiver");
+					} else {
+						((NotificationManager)getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE)).cancelAll();
+						 Log.d(TAG, "Disabled receiver");
+					}
+				}
+			});
+	        
+	        Log.d(TAG, "Activity created");
+    	} catch (Exception e) {
+    		Log.e(TAG, "Fatal error: ", e);
+    		finish();
+    	}
     }
 
 

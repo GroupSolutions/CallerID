@@ -20,13 +20,12 @@ public abstract class PhonecallReceiver extends BroadcastReceiver {
     private static boolean isIncoming;
     private static String savedNumber;  //because the passed incoming is only valid in ringing
 
-
     @Override
     public void onReceive(Context context, Intent intent) {
 
         //We listen to two intents.  The new outgoing call only tells us of an outgoing call.  We use it to get the number.
         if (intent.getAction().equals("android.intent.action.NEW_OUTGOING_CALL")) {
-            savedNumber = intent.getExtras().getString("android.intent.extra.PHONE_NUMBER");
+            setSavedNumber(intent.getExtras().getString("android.intent.extra.PHONE_NUMBER"));
         }
         else{
             String stateStr = intent.getExtras().getString(TelephonyManager.EXTRA_STATE);
@@ -67,7 +66,7 @@ public abstract class PhonecallReceiver extends BroadcastReceiver {
             case TelephonyManager.CALL_STATE_RINGING:
                 isIncoming = true;
                 callStartTime = new Date();
-                savedNumber = number;
+                setSavedNumber(number);
                 onIncomingCallStarted(context, number, callStartTime);
                 break;
             case TelephonyManager.CALL_STATE_OFFHOOK:
@@ -93,5 +92,9 @@ public abstract class PhonecallReceiver extends BroadcastReceiver {
                 break;
         }
         lastState = state;
+    }
+    
+    private static synchronized void setSavedNumber(String newNumber) {
+    	savedNumber = newNumber;
     }
 }
