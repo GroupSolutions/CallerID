@@ -67,7 +67,7 @@ public class InfoScreen extends Activity {
 	        
 	        Log.d(TAG, "Activity created");
     	} catch (Exception e) {
-    		Log.e(TAG, "Fatal error: ", e);
+    		Log.wtf(TAG, e);
     		finish();
     	}
     }
